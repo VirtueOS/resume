@@ -117,6 +117,11 @@ function loadCats(files) {
   CATS = files;
   const gallery = document.getElementById('cats-gallery');
   if (!gallery) return;
+
+  let page = 0;
+  let prevPage = 0;
+  const items = [];
+
   files.forEach((f, i) => {
     const isVideo = /\.(mp4|webm|mov)$/i.test(f);
     let el;
@@ -135,8 +140,53 @@ function loadCats(files) {
     }
     el.alt = 'cat';
     el.addEventListener('click', () => openLightbox(i));
-    gallery.appendChild(el);
+    items.push(el);
   });
+
+  const totalPages = Math.ceil(items.length / 3);
+  const dotsContainer = document.getElementById('carousel-dots');
+
+  function renderDots() {
+    if (!dotsContainer) return;
+    dotsContainer.innerHTML = '';
+    for (let i = 0; i < totalPages; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'dot' + (i === page ? ' active' : '');
+      dot.addEventListener('click', () => { prevPage = page; page = i; render(); renderDots(); });
+      dotsContainer.appendChild(dot);
+    }
+  }
+
+  function render() {
+    gallery.innerHTML = '';
+    const start = page * 3;
+    const count = Math.min(3, items.length - start);
+    const forward = (page - prevPage + totalPages) % totalPages === 1;
+    const anim = forward ? 'catSlideIn' : 'catSlideInRev';
+    prevPage = page;
+    for (let j = 0; j < count; j++) {
+      const idx = start + j;
+      const clone = items[idx].cloneNode(true);
+      clone.style.animation = `${anim} .35s ease-out both`;
+      clone.style.animationDelay = `${j * 0.08}s`;
+      clone.addEventListener('click', () => openLightbox(idx));
+      if (items[idx].tagName === 'VIDEO') {
+        clone.muted = true;
+        clone.loop = true;
+        clone.addEventListener('mouseenter', () => clone.play());
+        clone.addEventListener('mouseleave', () => { clone.pause(); clone.currentTime = 0; });
+      }
+      gallery.appendChild(clone);
+    }
+  }
+
+  render();
+  renderDots();
+
+  const prevBtn = document.querySelector('.carousel-prev');
+  const nextBtn = document.querySelector('.carousel-next');
+  if (prevBtn) prevBtn.addEventListener('click', () => { prevPage = page; page = (page - 1 + totalPages) % totalPages; render(); renderDots(); });
+  if (nextBtn) nextBtn.addEventListener('click', () => { prevPage = page; page = (page + 1) % totalPages; render(); renderDots(); });
 }
 
 function openLightbox(index) {
