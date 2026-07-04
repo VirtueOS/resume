@@ -82,33 +82,44 @@ const zero = n => String(n).padStart(2, '0');
 const IMG_EXTS = ['jpg', 'jpeg', 'png', 'webp'];
 const VID_EXTS = ['mp4', 'webm', 'mov'];
 
-function tryExts(n, exts, idx) {
-  if (idx >= exts.length) return Promise.reject();
-  const isVid = /^(mp4|webm|mov)$/.test(exts[idx]);
-  return new Promise((resolve, reject) => {
-    if (isVid) {
-      const v = document.createElement('video');
-      v.preload = 'auto';
-      v.onloadeddata = () => resolve(`cat-${zero(n)}.${exts[idx]}`);
-      v.onerror = () => tryExts(n, exts, idx + 1).then(resolve, reject);
-      v.src = `res/cats/cat-${zero(n)}.${exts[idx]}`;
-      v.load();
-    } else {
-      const img = new Image();
-      img.onload = () => resolve(`cat-${zero(n)}.${exts[idx]}`);
-      img.onerror = () => tryExts(n, exts, idx + 1).then(resolve, reject);
-      img.src = `res/cats/cat-${zero(n)}.${exts[idx]}`;
-    }
-  });
-}
+function scanCats() {
+  const gallery = document.getElementById('cats-gallery');
+  if (!gallery) return;
+  const found = [];
+  let pending = 0;
+  const MAX = 50;
 
-function scanCats(n = 1, acc = []) {
-  tryExts(n, [...IMG_EXTS, ...VID_EXTS], 0)
-    .then(file => {
-      acc.push(file);
-      scanCats(n + 1, acc);
-    })
-    .catch(() => { if (acc.length) loadCats(acc); });
+  for (let n = 1; n <= MAX; n++) {
+    const num = zero(n);
+
+    const tryOne = ext => new Promise((resolve, reject) => {
+      const isVid = /^(mp4|webm|mov)$/.test(ext);
+      if (isVid) {
+        const v = document.createElement('video');
+        v.preload = 'auto';
+        v.onloadeddata = () => resolve(ext);
+        v.onerror = () => reject();
+        v.src = `res/cats/cat-${num}.${ext}`;
+        v.load();
+      } else {
+        const img = new Image();
+        img.onload = () => resolve(ext);
+        img.onerror = () => reject();
+        img.src = `res/cats/cat-${num}.${ext}`;
+      }
+    });
+
+    pending++;
+    Promise.any([...IMG_EXTS, ...VID_EXTS].map(tryOne))
+      .then(ext => { found.push(`cat-${num}.${ext}`); })
+      .catch(() => {})
+      .finally(() => {
+        pending--;
+        if (pending === 0) {
+          if (found.length) loadCats(found);
+        }
+      });
+  }
 }
 
 scanCats();
