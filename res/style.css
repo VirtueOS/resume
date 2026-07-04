@@ -11,9 +11,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.85
 nav .container{display:flex;align-items:center;justify-content:space-between;height:60px}
 nav .logo{font-weight:700;font-size:1.1rem;color:#fff}
 nav .logo a{color:#fff}
-nav .nav-links{display:flex;gap:28px;list-style:none}
-nav .nav-links a{font-size:.85rem;font-weight:500;color:var(--text2);transition:color .2s}
-nav .nav-links a:hover{color:#fff}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:.85rem;font-weight:500;color:var(--text2);transition:color .2s}
+.nav-links a:hover{color:#fff}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;z-index:101}
+.burger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:transform .3s,opacity .3s}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media(max-width:768px){
+  .nav-links{position:fixed;top:0;right:-100%;width:260px;height:100vh;flex-direction:column;background:var(--surface);border-left:1px solid var(--border);padding:80px 32px 32px;gap:0;transition:right .3s;z-index:100}
+  .nav-links.open{right:0}
+  .nav-links li{width:100%}
+  .nav-links a{display:block;padding:14px 0;font-size:1rem;border-bottom:1px solid var(--border)}
+  .burger{display:flex}
+}
 
 .hero{min-height:100vh;display:flex;align-items:center;position:relative;padding-top:60px;overflow:hidden}
 .hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 40%, rgba(108,92,231,.08) 0%, transparent 50%),radial-gradient(circle at 70% 60%, rgba(0,206,201,.05) 0%, transparent 50%);pointer-events:none}

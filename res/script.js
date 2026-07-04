@@ -204,3 +204,24 @@ function openLightbox(index) {
 
   document.body.appendChild(overlay);
 }
+
+const burger = document.getElementById('burger');
+const navLinks = document.getElementById('nav-links');
+if (burger && navLinks) {
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      burger.classList.remove('open');
+      navLinks.classList.remove('open');
+    });
+  });
+  document.addEventListener('click', e => {
+    if (!navLinks.contains(e.target) && !burger.contains(e.target)) {
+      burger.classList.remove('open');
+      navLinks.classList.remove('open');
+    }
+  });
+}
