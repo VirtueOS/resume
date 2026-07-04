@@ -66,3 +66,12 @@ function animate() {
 animate();
 
 document.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+
+const scrollHint = document.querySelector('.scroll-hint');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 20) {
+    scrollHint?.classList.add('hidden');
+  } else {
+    scrollHint?.classList.remove('hidden');
+  }
+});

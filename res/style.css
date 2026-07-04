@@ -32,7 +32,8 @@ nav .nav-links a:hover{color:#fff}
 .hero .links .primary:hover{background:var(--accent2);transform:translateY(-2px)}
 .hero .links .secondary{border:1px solid var(--border);color:var(--text2)}
 .hero .links .secondary:hover{border-color:var(--accent);color:#fff;transform:translateY(-2px)}
-.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);color:var(--text2);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;animation:bounce 2s infinite}
+.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);color:var(--text2);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;animation:bounce 2s infinite;transition:opacity .4s}
+.scroll-hint.hidden{opacity:0;pointer-events:none}
 @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
 
 section{padding:100px 0}
@@ -44,7 +45,7 @@ section{padding:100px 0}
 @media(max-width:768px){.about-grid{grid-template-columns:1fr}}
 .about-text p{color:var(--text2);margin-bottom:16px;font-size:1.05rem}
 .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .stat-card .num{font-size:1.6rem;font-weight:700;color:#fff}
 .stat-card .label{font-size:.8rem;color:var(--text2);margin-top:4px}
 
