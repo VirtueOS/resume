@@ -10,6 +10,7 @@ a:hover{color:#fff}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
 nav .container{display:flex;align-items:center;justify-content:space-between;height:60px}
 nav .logo{font-weight:700;font-size:1.1rem;color:#fff}
+nav .logo a{color:#fff}
 nav .nav-links{display:flex;gap:28px;list-style:none}
 nav .nav-links a{font-size:.85rem;font-weight:500;color:var(--text2);transition:color .2s}
 nav .nav-links a:hover{color:#fff}
@@ -47,8 +48,11 @@ section{padding:100px 0}
 .stat-card .num{font-size:1.6rem;font-weight:700;color:#fff}
 .stat-card .label{font-size:.8rem;color:var(--text2);margin-top:4px}
 
-.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
-.skill-tag{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 18px;text-align:center;font-weight:500;font-size:.9rem;transition:all .25s;cursor:default}
+.skills-category{margin-bottom:32px}
+.skills-category:last-child{margin-bottom:0}
+.skills-cat-title{font-size:.9rem;font-weight:600;color:var(--accent2);margin-bottom:12px;letter-spacing:.04em}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;align-items:center}
+.skill-tag{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 20px;text-align:center;font-weight:500;font-size:.9rem;transition:all .25s;cursor:default;white-space:nowrap}
 .skill-tag:hover{border-color:var(--accent);background:var(--surface2);transform:translateY(-2px)}
 
 .timeline{position:relative}
