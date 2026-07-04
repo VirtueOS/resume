@@ -1,3 +1,1 @@
-# Resume — VirtueOS
-
-**[View resume →](https://virtueos.github.io/resume/)**
+# [Resume — VirtueOS](https://virtueos.github.io/resume/)
