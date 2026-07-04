@@ -116,6 +116,11 @@ function scanCats() {
       .finally(() => {
         pending--;
         if (pending === 0) {
+          found.sort((a, b) => {
+            const na = parseInt(a.match(/\d+/)[0], 10);
+            const nb = parseInt(b.match(/\d+/)[0], 10);
+            return na - nb;
+          });
           if (found.length) loadCats(found);
         }
       });
