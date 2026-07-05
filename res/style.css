@@ -108,6 +108,9 @@ section{padding:100px 0}
 @keyframes catSlideInRev{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:translateX(0)}}
 .cats-gallery img,.cats-gallery video{animation:catSlideIn .35s ease-out}
 .cats-gallery img:hover,.cats-gallery video:hover{transform:scale(1.03);border-color:var(--accent)}
+.cats-skeleton{display:contents}
+.cats-skeleton .sk-item{border-radius:12px;background:var(--surface);border:1px solid var(--border);height:240px;animation:skShimmer 1.5s ease-in-out infinite}
+@keyframes skShimmer{0%{opacity:.4}50%{opacity:.8}100%{opacity:.4}}
 .carousel-btn{flex-shrink:0;width:44px;height:44px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s}
 .carousel-btn:hover{background:var(--surface2);border-color:var(--accent)}
 .carousel-prev::after{content:'‹'}
